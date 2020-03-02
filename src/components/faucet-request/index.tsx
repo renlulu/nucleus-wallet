@@ -20,9 +20,6 @@ import SpinnerWithCheckMark from '../spinner-with-check-mark';
 import Button from '../button';
 import FaucetPending from '../faucet-pending';
 import FaucetComplete from '../faucet-complete';
-
-import { CAPTCHA_SITE_KEY } from '../../constants';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { useAsyncFn } from 'react-fetcha';
 
 const FaucetRequest = ({ faucet, toAddress, reset }) => {
@@ -44,7 +41,6 @@ const FaucetRequest = ({ faucet, toAddress, reset }) => {
             <small className="text-danger text-fade-in">
               {error.message}
               <br />
-              {'Google reCAPTCHA might not work for some country.'}
             </small>
           </p>
           <br />
@@ -59,19 +55,12 @@ const FaucetRequest = ({ faucet, toAddress, reset }) => {
         </div>
       ) : (
         <div data-testid="recaptcha">
-          <div className="recaptcha">
-            <ReCAPTCHA
-              sitekey={CAPTCHA_SITE_KEY}
-              onChange={(recaptchaToken) => setToken(recaptchaToken)}
-              badge="inline"
-            />
-          </div>
           <br />
           <Button
             text="Run Faucet"
-            onClick={() => run({ token, toAddress })}
+            onClick={() => run({ toAddress })}
             level="primary"
-            disabled={token === undefined}
+            disabled={false}
           />
         </div>
       )}
